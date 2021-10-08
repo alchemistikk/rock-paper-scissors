@@ -1,17 +1,17 @@
-// INPUT: player clicks on a button for rock, button for scissors, button for
+// INPUT: 
+// player clicks on a button for rock, button for scissors, button for
 // paper, add click eventListener to each button that invokes playRound with the
 // corresponding playerSelection
 
-// GUI: display results in div. change all div.textContent = s to DOM methods
-// display runningScore, winner
-
-// LOGIC: var runningScore, winner; 
+// LOGIC:  
 // identify winner after one combatant reaches 5 points
 
 const container = document.querySelector('#container');
 const div = document.createElement('div');
-div.textContent = 'Hello';
+const runningScore = document.createElement('div');
+div.textContent = 'Rock Paper Scissors';
 container.appendChild(div);
+container.appendChild(runningScore);
 
 
 function computerPlay () {
@@ -86,9 +86,11 @@ function game () {
     switch (playRound(prompt(), computerPlay())) {
       case 'Player':
         playerScore += 1;
+        runningScore.textContent = playerScore + '-' + computerScore;
         break;
       case 'Computer':
         computerScore += 1;
+        runningScore.textContent = playerScore + '-' + computerScore;
         break;
     }
   }
