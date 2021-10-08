@@ -82,7 +82,7 @@ function game () {
   let playerScore = 0;
   let computerScore = 0;
 
-  for (let i = 0; i < 5; i++) {
+  while (playerScore < 5 && computerScore < 5) {
     switch (playRound(prompt(), computerPlay())) {
       case 'Player':
         playerScore += 1;
