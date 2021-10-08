@@ -1,3 +1,19 @@
+// INPUT: player clicks on a button for rock, button for scissors, button for
+// paper, add click eventListener to each button that invokes playRound with the
+// corresponding playerSelection
+
+// GUI: display results in div. change all div.textContent = s to DOM methods
+// display runningScore, winner
+
+// LOGIC: var runningScore, winner; 
+// identify winner after one combatant reaches 5 points
+
+const container = document.querySelector('#container');
+const div = document.createElement('div');
+div.textContent = 'Hello';
+container.appendChild(div);
+
+
 function computerPlay () {
   let randomNumber = Math.random();
   if (randomNumber < 0.333) {
@@ -15,14 +31,14 @@ function playRound (playerSelection, computerSelection) {
     case 'ROCK':
       switch (computerSelection) {
         case 'Rock':
-          console.log('Draw.');
+          div.textContent = 'Draw.';
           break;
         case 'Paper':
-          console.log('Paper beats Rock. Computer wins round.');
+          div.textContent = 'Paper beats Rock. Computer wins round.';
           roundWinner = 'Computer';
           break;
         case 'Scissors':
-          console.log('Rock beats Scissors. Player wins round.');
+          div.textContent = 'Rock beats Scissors. Player wins round.';
           roundWinner = 'Player';
           break;
       }
@@ -30,14 +46,14 @@ function playRound (playerSelection, computerSelection) {
     case 'PAPER':
       switch (computerSelection) {
         case 'Rock':
-          console.log('Paper beats Rock. Player wins round.');
+          div.textContent = 'Paper beats Rock. Player wins round.';
           roundWinner = 'Player';
           break;
         case 'Paper':
-          console.log('Draw.');
+          div.textContent = 'Draw.';
           break;
         case 'Scissors':
-          console.log('Scissors beats Paper. Computer wins round.');
+          div.textContent = 'Scissors beats Paper. Computer wins round.';
           roundWinner = 'Computer';
           break;
       }
@@ -45,15 +61,15 @@ function playRound (playerSelection, computerSelection) {
     case 'SCISSORS': {
       switch (computerSelection) {
         case 'Rock':
-          console.log('Rock beats Scissors. Computer wins round.');
+          div.textContent = 'Rock beats Scissors. Computer wins round.';
           roundWinner = 'Computer';
           break;
         case 'Paper':
-          console.log('Scissors beats Paper. Player wins round.');
+          div.textContent = 'Scissors beats Paper. Player wins round.';
           roundWinner = 'Player';
           break;
         case 'Scissors':
-          console.log('Draw.');
+          div.textContent = 'Draw.';
           break;
       }
     }
@@ -77,9 +93,9 @@ function game () {
     }
   }
 
-  console.log((playerScore === computerScore ? 'Game Over. Draw.' : 
+  div.textContent = ((playerScore === computerScore ? 'Game Over. Draw.' : 
   playerScore > computerScore ? `Player wins ${playerScore} to ${computerScore}.` :
   `Computer wins ${computerScore} to ${playerScore}.`));
 }
 
-console.log(game());
+game();
