@@ -1,18 +1,36 @@
-// INPUT: 
-// player clicks on a button for rock, button for scissors, button for
-// paper, add click eventListener to each button that invokes playRound with the
-// corresponding playerSelection
-
-// LOGIC:  
-// identify winner after one combatant reaches 5 points
+let playerScore = 0;
+let computerScore = 0;
 
 const container = document.querySelector('#container');
-const div = document.createElement('div');
+const buttonDiv = document.createElement('div');
+const rockButton = document.createElement('button');
+const paperButton = document.createElement('button');
+const scissorsButton = document.createElement('button')
+const resultDisplay = document.createElement('div');
 const runningScore = document.createElement('div');
-div.textContent = 'Rock Paper Scissors';
-container.appendChild(div);
-container.appendChild(runningScore);
+;
 
+rockButton.id = "rock";
+paperButton.id = "paper";
+scissorsButton.id = "scissors";
+
+rockButton.textContent = "Rock";
+paperButton.textContent = "Paper";
+scissorsButton.textContent = "Scissors";
+
+container.appendChild(buttonDiv);
+container.appendChild(resultDisplay);
+container.appendChild(runningScore);
+buttonDiv.appendChild(rockButton);
+buttonDiv.appendChild(paperButton);
+buttonDiv.appendChild(scissorsButton);
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    playRound(button.id);
+  });
+})
 
 function computerPlay () {
   let randomNumber = Math.random();
@@ -21,83 +39,83 @@ function computerPlay () {
   } else if (randomNumber < 0.667) {
     return 'Paper';
   } else {
-    return 'Scissors'
+    return 'Scissors';
   }
 }
 
-function playRound (playerSelection, computerSelection) {
+function playRound (playerSelection) {
   let roundWinner;
   switch (playerSelection.toUpperCase()) {
     case 'ROCK':
-      switch (computerSelection) {
+      switch (computerPlay()) {
         case 'Rock':
-          div.textContent = 'Draw.';
+          resultDisplay.textContent = 'Draw.';
           break;
         case 'Paper':
-          div.textContent = 'Paper beats Rock. Computer wins round.';
+          resultDisplay.textContent = 'Paper beats Rock. Computer wins round.';
           roundWinner = 'Computer';
           break;
         case 'Scissors':
-          div.textContent = 'Rock beats Scissors. Player wins round.';
+          resultDisplay.textContent = 'Rock beats Scissors. Player wins round.';
           roundWinner = 'Player';
           break;
       }
       break;
     case 'PAPER':
-      switch (computerSelection) {
+      switch (computerPlay()) {
         case 'Rock':
-          div.textContent = 'Paper beats Rock. Player wins round.';
+          resultDisplay.textContent = 'Paper beats Rock. Player wins round.';
           roundWinner = 'Player';
           break;
         case 'Paper':
-          div.textContent = 'Draw.';
+          resultDisplay.textContent = 'Draw.';
           break;
         case 'Scissors':
-          div.textContent = 'Scissors beats Paper. Computer wins round.';
+          resultDisplay.textContent = 'Scissors beats Paper. Computer wins round.';
           roundWinner = 'Computer';
           break;
       }
       break;
     case 'SCISSORS': {
-      switch (computerSelection) {
+      switch (computerPlay()) {
         case 'Rock':
-          div.textContent = 'Rock beats Scissors. Computer wins round.';
+          resultDisplay.textContent = 'Rock beats Scissors. Computer wins round.';
           roundWinner = 'Computer';
           break;
         case 'Paper':
-          div.textContent = 'Scissors beats Paper. Player wins round.';
+          resultDisplay.textContent = 'Scissors beats Paper. Player wins round.';
           roundWinner = 'Player';
           break;
         case 'Scissors':
-          div.textContent = 'Draw.';
+          resultDisplay.textContent = 'Draw.';
           break;
       }
     }
     break;
   }
-  return roundWinner;
-}
-
-function game () {
-  let playerScore = 0;
-  let computerScore = 0;
-
-  while (playerScore < 5 && computerScore < 5) {
-    switch (playRound(prompt(), computerPlay())) {
-      case 'Player':
-        playerScore += 1;
-        runningScore.textContent = playerScore + '-' + computerScore;
-        break;
-      case 'Computer':
-        computerScore += 1;
-        runningScore.textContent = playerScore + '-' + computerScore;
-        break;
-    }
+  switch (roundWinner) {
+    case 'Player':
+      playerScore += 1;
+      runningScore.textContent = playerScore + '-' + computerScore;
+      break;
+    case 'Computer':
+      computerScore += 1;
+      runningScore.textContent = playerScore + '-' + computerScore;
+      break;
   }
-
-  div.textContent = ((playerScore === computerScore ? 'Game Over. Draw.' : 
-  playerScore > computerScore ? `Player wins ${playerScore} to ${computerScore}.` :
-  `Computer wins ${computerScore} to ${playerScore}.`));
+  isGameOver();
 }
 
-game();
+function isGameOver () {
+  if (playerScore >= 5 || computerScore >= 5) {
+    runningScore.textContent = ((playerScore === computerScore ?
+      'Game Over. Draw.' : playerScore > computerScore ? 
+      `Player wins ${playerScore} to ${computerScore}.` :
+    `Computer wins ${computerScore} to ${playerScore}.`));
+    playerScore = 0;
+    computerScore = 0;
+  }
+}
+
+
+
